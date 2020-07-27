@@ -1,0 +1,39 @@
+endpoints:
+  - name: Github
+    url: https://github.com
+    upHttpCode:
+      - 200
+      - 201
+    downHttpCode:
+      - 300
+      - 301
+      - 302
+  - name: Freitagsrunde
+    url: https://wiki.freitagsrunde.org/
+    upHttpCode:
+      - 200
+      - 201
+      - 401
+    downHttpCode:
+      - 300
+      - 301
+      - 302
+  - name: Healthy-API
+    url: http://healthy-api:8080/health
+    upHttpCode:
+      - 200
+      - 201
+    downHttpCode:
+      - 300
+      - 301
+      - 302
+  - name: Healthy-UI
+    url: http://healthy-ui:80
+    upHttpCode:
+      - 200
+      - 201
+    downHttpCode:
+      - 300
+      - 301
+      - 302
+
