@@ -2,6 +2,8 @@
 
 **DISCLAIMER**: I used this little project to learn Kotlin and ReactJS. Probably there is a lot to improve and there are some bugs :) So please be careful if you want to use it and for sure feel free to contribute.
 
+![Healthy](https://github.com/hechi/healthy/workflows/Healthy/badge.svg)
+
 ![healthy-ui](healthy-ui.png "healthy-ui")
 
 ## Description
