@@ -16,18 +16,18 @@ jobs:
       # build healthy-api image and push it to docker hub
       - name: Build and push healthy-api image
         uses: docker/build-push-action@v1
+        working-directory: healthy-api
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: hechi/healthy-api
-          dockerfile: {path}/healthy-api/Dockerfile
           tags: dev
-      # build healthy-ui image and push it to docker hub
+          # build healthy-ui image and push it to docker hub
       - name: Build and push healthy-ui image
         uses: docker/build-push-action@v1
+        working-directory: healthy-ui
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: hechi/healthy-ui
-          dockerfile: {path}/healthy-ui/Dockerfile
           tags: dev
