@@ -12,6 +12,7 @@ import org.springframework.context.annotation.PropertySource
 import org.springframework.stereotype.Service
 import java.net.URL
 import java.nio.file.Files
+import java.time.LocalDateTime
 
 private val log = KotlinLogging.logger {}
 
@@ -33,7 +34,9 @@ class ConfigurationService(@Value("\${healthy.config.location}") var location: S
                 Status.UNKNOWN,
                 endpoint.url,
                 endpoint.upHttpCode,
-                endpoint.downHttpCode
+                endpoint.downHttpCode,
+                0,
+                LocalDateTime.MIN
             )
         }
     }

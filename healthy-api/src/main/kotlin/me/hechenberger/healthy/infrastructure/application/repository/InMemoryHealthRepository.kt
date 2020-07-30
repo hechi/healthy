@@ -5,8 +5,10 @@ import me.hechenberger.healthy.domain.health.Status
 import me.hechenberger.healthy.domain.health.repository.HealthRepository
 import mu.KotlinLogging
 import org.springframework.stereotype.Repository
+import java.time.LocalDateTime
 
 private val log = KotlinLogging.logger {}
+
 @Repository
 class InMemoryHealthRepository :
     HealthRepository {
@@ -20,22 +22,19 @@ class InMemoryHealthRepository :
         return applications.getValue(name)
     }
 
-    override fun update(name: String, status: Status) {
-        applications.getValue(name).status = status
-        log.info("${name} is ${status}")
-    }
-
     override fun save(
         name: String,
         status: Status,
         url: String,
         upHttpCode: List<Int>,
-        downHttpCode: List<Int>
+        downHttpCode: List<Int>,
+        responseTimeInMillis: Long,
+        timestamp: LocalDateTime
     ) {
         applications = applications.plus(
             Pair(
                 name,
-                Health(name, status, url, upHttpCode, downHttpCode)
+                Health(name, status, url, upHttpCode, downHttpCode, responseTimeInMillis, timestamp)
             )
         )
     }

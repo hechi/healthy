@@ -18,12 +18,12 @@ to monitor. I just wanted to know if they are up and running.
 - [X] make HTTP response configurable (ex. 200 -> healthy, 301 or 302 -> unhealthy)
 - [X] create docker image
 - [X] query endpoints in a specified time interval.
+- [X] measure response time of endpoint
 - [ ] implement basic http authentication
 - [ ] make timeouts configurable
 - [ ] follow redirects
 - [ ] describe `healthy.yaml`
 - [ ] implement pipeline
-- [ ] measure response time of endpoint
 - [ ] provide prometheus metric endpoint for scraper
 - [ ] add IP response
 - [ ] document the endpoint (swagger?)

@@ -16,7 +16,15 @@ class HealthController @Autowired constructor(
 
     init {
         configurationService.getEndpoints()
-            .forEach { app -> healthRepository.save(app.name, app.status, app.url, app.upHttpCode, app.downHttpCode) }
+            .forEach { app -> healthRepository.save(
+                app.name,
+                app.status,
+                app.url,
+                app.upHttpCode,
+                app.downHttpCode,
+                app.responseTimeInMillis,
+                app.timestamp
+            ) }
     }
 
     @GetMapping("/health")

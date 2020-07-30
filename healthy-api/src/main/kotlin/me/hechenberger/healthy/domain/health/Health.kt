@@ -1,11 +1,17 @@
 package me.hechenberger.healthy.domain.health
 
+import lombok.Data
+import java.time.LocalDateTime
+
+@Data
 data class Health(
-    val name: String,
+    var name: String,
     var status: Status,
-    val url: String,
-    val upHttpCode: List<Int>,
-    val downHttpCode: List<Int>
+    var url: String,
+    var upHttpCode: List<Int>,
+    var downHttpCode: List<Int>,
+    var responseTimeInMillis: Long,
+    var timestamp: LocalDateTime
 ) {
     fun updateStatus(statusCode: Int) {
         if(upHttpCode.contains(statusCode)){

@@ -48,7 +48,9 @@ type HealthList = {
 
 type Health = {
   name: string,
-  status: string
+  status: string,
+  responseTimeInMillis: number,
+  timestamp: Date
 }
 
 export default function HealthTables(healthList: HealthList) {
@@ -60,8 +62,9 @@ export default function HealthTables(healthList: HealthList) {
         <TableHead>
           <TableRow>
             <StyledTableCell>Service Name</StyledTableCell>
+            <StyledTableCell align="right">Timestamp</StyledTableCell>
+            <StyledTableCell align="right">Response Time</StyledTableCell>
             <StyledTableCell align="right">Status</StyledTableCell>
-            {/* <StyledTableCell align="right">Response Time</StyledTableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -70,12 +73,17 @@ export default function HealthTables(healthList: HealthList) {
             <StyledTableRow key={key}>
               {console.log(row)}
               <StyledTableCell >{row.name}</StyledTableCell>
+              <StyledTableCell align="right">{new Intl.DateTimeFormat("en-US", {
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit"
+              }).format(new Date(row.timestamp))}</StyledTableCell>
+              <StyledTableCell align="right">{row.responseTimeInMillis > 0 ? row.responseTimeInMillis : '---'} ms</StyledTableCell>
               <StyledTableCell align="right">{
-              row.status==="UNKNOWN" && <HelpOutlineOutlinedIcon></HelpOutlineOutlinedIcon> ||
-              row.status==="UP" && <CheckIcon></CheckIcon> ||
-              row.status==="DOWN" && <ErrorOutlineOutlinedIcon></ErrorOutlineOutlinedIcon>
+                row.status === "UP" ? <CheckIcon></CheckIcon>
+                  : row.status === "DOWN" ? <ErrorOutlineOutlinedIcon></ErrorOutlineOutlinedIcon>
+                    : <HelpOutlineOutlinedIcon></HelpOutlineOutlinedIcon>
               }</StyledTableCell>
-              {/* <StyledTableCell align="right">10ms</StyledTableCell> */}
             </StyledTableRow>
           ))}
         </TableBody>

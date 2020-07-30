@@ -1,5 +1,4 @@
 import React from 'react'
-import logo from './logo.svg'
 import healthyLogo from './healthy_logo.png'
 import { useQuery } from "react-query"
 import { ReactQueryDevtools } from 'react-query-devtools'
@@ -28,7 +27,7 @@ function App() {
       healthy_api+"/health"
     ).then((res) => res.json())
   ,{
-    refetchInterval: 5,
+    refetchInterval: 10,
     refetchIntervalInBackground: true
   });
   if (isLoading) return "Loading...";
