@@ -35,6 +35,11 @@ dependencies {
     // logging
     implementation("io.github.microutils:kotlin-logging:+")
     implementation("com.squareup.okhttp3:okhttp:+")
+    // lombok
+    compileOnly("org.projectlombok:lombok:+")
+    annotationProcessor("org.projectlombok:lombok:+")
+    testCompileOnly("org.projectlombok:lombok:+")
+    testAnnotationProcessor("org.projectlombok:lombok:+")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")

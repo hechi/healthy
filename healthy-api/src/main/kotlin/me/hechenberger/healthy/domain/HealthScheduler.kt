@@ -9,7 +9,8 @@ import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 import java.net.InetAddress
 import java.net.URI
-import java.net.URL
+import java.time.LocalDateTime
+import kotlin.system.measureTimeMillis
 
 
 private val log = KotlinLogging.logger {}
@@ -30,19 +31,24 @@ class HealthScheduler @Autowired constructor(var healthRepository: HealthReposit
     fun checkHealth() {
         healthRepository.getApplications().map { app ->
             GlobalScope.async(Dispatchers.Default) {
+                var statusCode = Int.MIN_VALUE
+                var responseTimeInMillis: Long = -1
                 try {
                     withTimeout(timeoutInMilliSec) {
                         log.info("start request -> ${app.name}")
-                        var statusCode: Int = requestUrl(app.url)
-                        log.info("${app.name} response with status code ${statusCode}")
-                        app.updateStatus(statusCode)
-                        healthRepository.update(app.name, app.status)
+                        responseTimeInMillis = measureTimeMillis {
+                            statusCode = requestUrl(app.url)
+                        }
+                        log.info("${app.name} response with status code ${statusCode} took ${responseTimeInMillis}ms")
                     }
                 } catch (e: java.lang.Exception) {
                     println("timeout hit in $app")
-                    app.updateStatus(Int.MIN_VALUE)
-                    healthRepository.update(app.name, app.status)
                 }
+                // TODO: refactor this part
+                app.updateStatus(statusCode)
+                app.responseTimeInMillis = responseTimeInMillis
+                app.timestamp = LocalDateTime.now()
+                healthRepository.save(app.name, app.status, app.url, app.upHttpCode, app.downHttpCode, app.responseTimeInMillis, app.timestamp)
             }
         }
     }
@@ -52,9 +58,9 @@ fun requestUrl(url: String): Int {
     val urlIp = InetAddress.getByName(URI.create(url).host)
     log.info { "$url ${urlIp.getHostAddress()}" }
     val (request, response, result) = Fuel
-            .reset()
-            .get(url)
-            .timeout(100)
-            .useHttpCache(false).responseString()
+        .reset()
+        .get(url)
+        .timeout(100)
+        .useHttpCache(false).responseString()
     return response.statusCode
 }

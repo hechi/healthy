@@ -2,6 +2,7 @@ package me.hechenberger.healthy.domain.health.repository
 
 import me.hechenberger.healthy.domain.health.Health
 import me.hechenberger.healthy.domain.health.Status
+import java.time.LocalDateTime
 
 interface HealthRepository {
 
@@ -9,13 +10,13 @@ interface HealthRepository {
 
     fun get(name: String): Health
 
-    fun update(name: String, status: Status)
-
     fun save(
         name: String,
         status: Status,
         url: String,
         upHttpCode: List<Int>,
-        downHttpCode: List<Int>
+        downHttpCode: List<Int>,
+        responseTime: Long,
+        timestampInMillis: LocalDateTime
     )
 }
