@@ -27,7 +27,7 @@ function App() {
       healthy_api+"/health"
     ).then((res) => res.json())
   ,{
-    refetchInterval: 10,
+    refetchInterval: 60*1000,
     refetchIntervalInBackground: true
   });
   if (isLoading) return "Loading...";
