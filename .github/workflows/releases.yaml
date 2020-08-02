@@ -8,7 +8,7 @@ on:
 
 jobs:
   healthy-api:
-    name: Build and publish healthy-ui
+    name: Build and publish healthy-api
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
