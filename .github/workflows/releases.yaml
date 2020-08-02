@@ -1,15 +1,15 @@
-name: "Healthy - development"
+name: "Healthy - releases"
 
 # only execute workflow on the master branch
 on:
   push:
-    branches: master
+    tags:
+      - "*"
 
 jobs:
-  buildAndPublish:
-    name: Build and publish dev docker
+  healthy-api:
+    name: Build and publish healthy-ui
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -22,7 +22,12 @@ jobs:
           repository: hechi/healthy-api
           path: healthy-api/
           dockerfile: healthy-api/Dockerfile
-          tags: dev
+          tag_with_ref: true
+
+  healthy-ui:
+    name: Build and publish healthy-ui
+    runs-on: ubuntu-latest
+    steps:
       # build healthy-ui image and push it to docker hub
       - name: Build and push healthy-ui image
         uses: docker/build-push-action@v1
@@ -32,4 +37,17 @@ jobs:
           repository: hechi/healthy-ui
           path: healthy-ui/
           dockerfile: healthy-ui/Dockerfile
-          tags: dev
+          tag_with_ref: true
+
+  release_healthy:
+    name: Release healthy-api and healthy-ui
+    runs-on: ubuntu-latest
+    needs: [healthy-api, healthy-ui]
+    steps:
+      # release a new version on github
+      - name: Release
+        uses: docker://antonyurchenko/git-release:latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CHANGELOG_FILE: none
+          RELEASE_NAME_PREFIX: "Release "
