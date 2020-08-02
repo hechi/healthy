@@ -28,6 +28,8 @@ jobs:
     name: Build and publish healthy-ui
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
       # build healthy-ui image and push it to docker hub
       - name: Build and push healthy-ui image
         uses: docker/build-push-action@v1
@@ -44,6 +46,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: [healthy-api, healthy-ui]
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
       # release a new version on github
       - name: Release
         uses: docker://antonyurchenko/git-release:latest
