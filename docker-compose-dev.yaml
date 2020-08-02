@@ -1,18 +1,20 @@
 version: "3.8"
 services:
   healthy-api:
-    container_name: health-api
-    image: hechi/healthy-api:0.0.1
+    container_name: healthy-api
     ports: 
       - 8080:8080
     volumes:
       - ./healthy.yaml:/healthy.yaml
+    build: 
+      context: ./healthy-api
   healthy-ui:
     container_name: healthy-ui
-    image: hechi/healthy-ui:0.0.1
     ports: 
       - 8880:80
     environment:
       REACT_APP_HEALTHY_API_URL: "http://healthy-api:8080"
+    build: 
+      context: ./healthy-ui
     depends_on:
       - healthy-api
