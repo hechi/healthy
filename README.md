@@ -21,11 +21,16 @@ to monitor. I just wanted to know if they are up and running.
 
 ## How to run it
 
-You can build the project with the *docker-compose.yaml* or create the *healthy-api* and/or *healthy-ui* separatly. To create them independently, please look into the **README.md** above.
+You can build the project with the *docker-compose-dev.yaml* or create the *healthy-api* and/or *healthy-ui* separatly. To create them independently, please look into the **README.md** above.
 
-The following command will build the docker containers and run them
+The following command will build the docker containers from the source code and run them.
 ```
-# docker-compose up --build
+# docker-compose -f docker-compose-dev.yaml up --build
+```
+
+If you want to download the images from [dockerhub](https://hub.docker.com/u/hechi) you can use the *docker-compose.yaml* to do so.
+```
+# docker-compose up
 ```
 
 ## Configuration
