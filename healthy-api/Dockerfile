@@ -17,7 +17,8 @@ FROM adoptopenjdk:11.0.8_10-jre-hotspot
 
 # Copy the jar to the production image from the builder stage.
 COPY --from=builder /home/gradle/build/libs/*.jar /Healthy.jar
-COPY src/main/resources/healthy.yaml /healthy.yaml
+RUN mkdir /config
+COPY src/main/resources/healthy.yaml /config/healthy.yaml
 EXPOSE 8080
 # Run the web service on container startup.
-CMD [ "java", "-jar", "-Dhealthy.config.location=file:healthy.yaml", "/Healthy.jar" ]
+CMD [ "java", "-jar", "-Dhealthy.config.location=file:config/healthy.yaml", "/Healthy.jar" ]
