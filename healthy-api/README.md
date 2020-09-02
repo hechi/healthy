@@ -19,6 +19,7 @@ to monitor. I just wanted to know if they are up and running.
 - [X] create docker image
 - [X] query endpoints in a specified time interval.
 - [X] measure response time of endpoint
+- [ ] read healthy.yaml from time to time again, so that we do not need to restart the application
 - [ ] implement basic http authentication
 - [ ] make timeouts configurable
 - [ ] follow redirects
@@ -48,5 +49,5 @@ to monitor. I just wanted to know if they are up and running.
 ```
 * Run docker image with custom healthy.yaml
 ```$xslt
-# docker run -p 80:8080 -v $(pwd)/healthy.yaml:/healthy.yaml healthy
+# docker run -p 80:8080 -v $(pwd)/healthy.yaml:/config/healthy.yaml healthy
 ```
