@@ -16,8 +16,8 @@ const containerBasic = {
   display: "flex",
 }
 
-const healthy_api = process.env.REACT_APP_HEALTHY_API_URL
-  ? process.env.REACT_APP_HEALTHY_API_URL 
+const healthy_api = window._env_.REACT_APP_HEALTHY_API_URL
+  ? window._env_.REACT_APP_HEALTHY_API_URL 
   : "http://localhost:8080"
 
 function App() {
