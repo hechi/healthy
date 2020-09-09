@@ -5,7 +5,7 @@ import me.hechenberger.healthy.domain.health.Status
 import me.hechenberger.healthy.domain.health.repository.HealthRepository
 import mu.KotlinLogging
 import org.springframework.stereotype.Repository
-import java.time.LocalDateTime
+import java.time.Instant
 
 private val log = KotlinLogging.logger {}
 
@@ -29,12 +29,12 @@ class InMemoryHealthRepository :
         upHttpCode: List<Int>,
         downHttpCode: List<Int>,
         responseTimeInMillis: Long,
-        timestamp: LocalDateTime
+        timestampInMillis: Instant
     ) {
         applications = applications.plus(
             Pair(
                 name,
-                Health(name, status, url, upHttpCode, downHttpCode, responseTimeInMillis, timestamp)
+                Health(name, status, url, upHttpCode, downHttpCode, responseTimeInMillis, timestampInMillis)
             )
         )
     }

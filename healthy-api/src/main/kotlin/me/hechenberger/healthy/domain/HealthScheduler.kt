@@ -9,6 +9,7 @@ import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 import java.net.InetAddress
 import java.net.URI
+import java.time.Instant
 import java.time.LocalDateTime
 import kotlin.system.measureTimeMillis
 
@@ -47,7 +48,7 @@ class HealthScheduler @Autowired constructor(var healthRepository: HealthReposit
                 // TODO: refactor this part
                 app.updateStatus(statusCode)
                 app.responseTimeInMillis = responseTimeInMillis
-                app.timestamp = LocalDateTime.now()
+                app.timestamp = Instant.now()
                 healthRepository.save(app.name, app.status, app.url, app.upHttpCode, app.downHttpCode, app.responseTimeInMillis, app.timestamp)
             }
         }
@@ -57,10 +58,10 @@ class HealthScheduler @Autowired constructor(var healthRepository: HealthReposit
 fun requestUrl(url: String): Int {
     val urlIp = InetAddress.getByName(URI.create(url).host)
     log.info { "$url ${urlIp.getHostAddress()}" }
-    val (request, response, result) = Fuel
+    val response = Fuel
         .reset()
         .get(url)
         .timeout(100)
-        .useHttpCache(false).responseString()
+        .useHttpCache(false).responseString().second
     return response.statusCode
 }

@@ -2,13 +2,13 @@ package me.hechenberger.healthy.application.dto
 
 import me.hechenberger.healthy.domain.health.Health
 import me.hechenberger.healthy.domain.health.Status
-import java.time.LocalDateTime
+import java.time.Instant
 
 class HealthDto(
     var name: String,
     var status: Status,
     var responseTimeInMillis: Long,
-    var timestamp: LocalDateTime
+    var timestamp: Instant
 ) {
 
     companion object {
