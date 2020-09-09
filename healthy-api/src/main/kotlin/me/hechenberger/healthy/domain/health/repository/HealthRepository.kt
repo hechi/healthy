@@ -2,7 +2,7 @@ package me.hechenberger.healthy.domain.health.repository
 
 import me.hechenberger.healthy.domain.health.Health
 import me.hechenberger.healthy.domain.health.Status
-import java.time.LocalDateTime
+import java.time.Instant
 
 interface HealthRepository {
 
@@ -16,7 +16,7 @@ interface HealthRepository {
         url: String,
         upHttpCode: List<Int>,
         downHttpCode: List<Int>,
-        responseTime: Long,
-        timestampInMillis: LocalDateTime
+        responseTimeInMillis: Long,
+        timestampInMillis: Instant
     )
 }

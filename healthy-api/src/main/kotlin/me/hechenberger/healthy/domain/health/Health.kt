@@ -1,7 +1,7 @@
 package me.hechenberger.healthy.domain.health
 
 import lombok.Data
-import java.time.LocalDateTime
+import java.time.Instant
 
 @Data
 data class Health(
@@ -11,7 +11,7 @@ data class Health(
     var upHttpCode: List<Int>,
     var downHttpCode: List<Int>,
     var responseTimeInMillis: Long,
-    var timestamp: LocalDateTime
+    var timestamp: Instant
 ) {
     fun updateStatus(statusCode: Int) {
         if(upHttpCode.contains(statusCode)){
