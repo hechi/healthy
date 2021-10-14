@@ -2,6 +2,7 @@ package me.hechenberger.healthy.application.configuration
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
+import com.fasterxml.jackson.module.kotlin.KotlinFeature
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.google.common.io.Resources
 import me.hechenberger.healthy.domain.health.Health
@@ -43,7 +44,16 @@ class ConfigurationService(@Value("\${healthy.config.location}") var location: S
 
 fun loadFromFile(configFile: String): Endpoints {
     val mapper = ObjectMapper(YAMLFactory()) // Enable YAML parsing
-    mapper.registerModule(KotlinModule()) // Enable Kotlin support
+    mapper.registerModule(
+        KotlinModule.Builder()
+            .withReflectionCacheSize(512)
+            .configure(KotlinFeature.NullToEmptyCollection, false)
+            .configure(KotlinFeature.NullToEmptyMap, false)
+            .configure(KotlinFeature.NullIsSameAsDefault, false)
+//            .configure(KotlinFeature.SingletonSupport, DISABLED)
+            .configure(KotlinFeature.StrictNullChecks, false)
+            .build()
+    ) // Enable Kotlin support
     val url: URL = Resources.getResource(configFile)
     return Resources.asByteSource(url).openBufferedStream().use {
         mapper.readValue(it, Endpoints::class.java)
