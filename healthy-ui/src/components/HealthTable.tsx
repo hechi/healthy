@@ -68,9 +68,12 @@ export default function HealthTables(healthList: HealthList) {
           </TableRow>
         </TableHead>
         <TableBody>
+          <>
           {console.log(healthList.list)}
           {healthList.list.map((row, key) => (
+            <>
             <StyledTableRow key={key}>
+              <>
               {console.log(row)}
               <StyledTableCell >{row.name}</StyledTableCell>
               <StyledTableCell align="right">{new Intl.DateTimeFormat("en-US", {
@@ -84,8 +87,11 @@ export default function HealthTables(healthList: HealthList) {
                   : row.status === "DOWN" ? <ErrorOutlineOutlinedIcon></ErrorOutlineOutlinedIcon>
                     : <HelpOutlineOutlinedIcon></HelpOutlineOutlinedIcon>
               }</StyledTableCell>
+              </>
             </StyledTableRow>
+            </>
           ))}
+          </>
         </TableBody>
       </Table>
     </TableContainer>
