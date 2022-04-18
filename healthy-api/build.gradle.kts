@@ -1,10 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "2.5.5"
+    id("org.springframework.boot")
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
-    kotlin("jvm") version "1.5.31"
-    kotlin("plugin.spring") version "1.5.31"
+    kotlin("jvm")
+    kotlin("plugin.spring")
 }
 
 group = "me.hechenberger"
@@ -22,7 +22,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-configuration-processor")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.8")
+    implementation(KotlinX.coroutines.core)
     implementation("com.github.kittinunf.fuel:fuel:+")
     implementation("com.github.kittinunf.fuel:fuel-coroutines:+")
     implementation("com.github.kittinunf.result:result:+")

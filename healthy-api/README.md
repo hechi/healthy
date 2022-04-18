@@ -51,3 +51,9 @@ to monitor. I just wanted to know if they are up and running.
 ```$xslt
 # docker run -p 80:8080 -v $(pwd)/healthy.yaml:/config/healthy.yaml healthy
 ```
+
+### upgrade libraries
+* Run gradle plugin [refreshVersions](https://jmfayard.github.io/refreshVersions/)
+```$xslt
+# gradle refreshVersions
+```
