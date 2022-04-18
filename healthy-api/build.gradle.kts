@@ -2,10 +2,11 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("org.springframework.boot")
-    id("io.spring.dependency-management") version "1.0.11.RELEASE"
     kotlin("jvm")
     kotlin("plugin.spring")
 }
+
+apply(plugin = "io.spring.dependency-management")
 
 group = "me.hechenberger"
 version = "0.0.1-SNAPSHOT"
