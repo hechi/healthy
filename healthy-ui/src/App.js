@@ -1,11 +1,13 @@
 import React from 'react'
 import healthyLogo from './healthy_logo.png'
-import { useQuery } from "react-query"
-import { ReactQueryDevtools } from 'react-query-devtools'
+import { QueryClient, QueryClientProvider, useQuery } from "react-query"
+import { ReactQueryDevtools } from 'react-query/devtools'
 import HealthTable from './components/HealthTable'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Container from '@material-ui/core/Container'
 import './App.css'
+
+const queryClient = new QueryClient()
 
 const containerBasic = {
   padding: "2%",
@@ -20,7 +22,7 @@ const healthy_api = window._env_.REACT_APP_HEALTHY_API_URL
   ? window._env_.REACT_APP_HEALTHY_API_URL 
   : "http://localhost:8080"
 
-function App() {
+function AppHealthy() {
   const { isLoading, error, data } = useQuery("services", () =>
     fetch(
       // "http://localhost:8080/health"
@@ -50,4 +52,10 @@ function App() {
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <AppHealthy />
+    </QueryClientProvider>
+  )
+}
