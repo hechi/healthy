@@ -7,7 +7,7 @@ import java.time.Instant
 class HealthDto(
     var name: String,
     var status: Status,
-    var responsesTimeInMillis: Map<Instant,Long>,
+    var responsesTimeInMillis: Array<ResponseTimeDto>,
     var timestamp: Instant
 ) {
 
@@ -16,9 +16,21 @@ class HealthDto(
             return HealthDto(
                 health.name,
                 health.status,
-                health.responsesTimeInMillis,
+                ResponseTimeDto.toApplicationDto(health.responsesTimeInMillis),
                 health.timestamp
             )
+        }
+    }
+}
+
+class ResponseTimeDto(
+    var timestamp: Instant,
+    var responseTime: Long
+) {
+    companion object {
+        fun toApplicationDto(response: Map<Instant, Long>): Array<ResponseTimeDto> {
+            var responses: Array<ResponseTimeDto> = response.map { ResponseTimeDto(it.key, it.value)}.toTypedArray()
+            return responses
         }
     }
 }

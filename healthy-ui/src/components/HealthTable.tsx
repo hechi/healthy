@@ -10,6 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import CheckIcon from '@material-ui/icons/Check';
 import ErrorOutlineOutlinedIcon from '@material-ui/icons/ErrorOutlineOutlined';
 import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
+import HealthHistory from './HealthHistory';
 
 const StyledTableCell = withStyles((theme: Theme) =>
   createStyles({
@@ -46,14 +47,15 @@ type HealthList = {
   list: Array<Health>
 }
 
-type MapOfResponseTimes = {
-  [key: string]: number
+type ResponseTime = {
+  timestamp: Date,
+  responseTime: number
 }
 
 type Health = {
   name: string,
   status: string,
-  responsesTimeInMillis: MapOfResponseTimes,
+  responsesTimeInMillis: Array<ResponseTime>,
   timestamp: Date
 }
 
@@ -85,13 +87,16 @@ export default function HealthTables(healthList: HealthList) {
                 minute: "2-digit",
                 second: "2-digit"
               }).format(new Date(row.timestamp))}</StyledTableCell>
-              <StyledTableCell align="right">{Object.values(row.responsesTimeInMillis).length > 0 && Object.values(row.responsesTimeInMillis)[0] > 0 ? Object.values(row.responsesTimeInMillis)[0] : '---'} ms</StyledTableCell>
+              <StyledTableCell align="right">{row.responsesTimeInMillis.length > 0 && row.responsesTimeInMillis[0].responseTime > 0 ? row.responsesTimeInMillis[0].responseTime : '---'} ms</StyledTableCell>
               <StyledTableCell align="right">{
                 row.status === "UP" ? <CheckIcon></CheckIcon>
                   : row.status === "DOWN" ? <ErrorOutlineOutlinedIcon></ErrorOutlineOutlinedIcon>
                     : <HelpOutlineOutlinedIcon></HelpOutlineOutlinedIcon>
               }</StyledTableCell>
               </>
+            </StyledTableRow>
+            <StyledTableRow>
+              <TableCell colSpan={4} align="center"><HealthHistory data={row.responsesTimeInMillis}></HealthHistory></TableCell>
             </StyledTableRow>
             </>
           ))}
