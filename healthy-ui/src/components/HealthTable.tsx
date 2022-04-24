@@ -46,10 +46,14 @@ type HealthList = {
   list: Array<Health>
 }
 
+type MapOfResponseTimes = {
+  [key: string]: number
+}
+
 type Health = {
   name: string,
   status: string,
-  responseTimeInMillis: number,
+  responsesTimeInMillis: MapOfResponseTimes,
   timestamp: Date
 }
 
@@ -81,7 +85,7 @@ export default function HealthTables(healthList: HealthList) {
                 minute: "2-digit",
                 second: "2-digit"
               }).format(new Date(row.timestamp))}</StyledTableCell>
-              <StyledTableCell align="right">{row.responseTimeInMillis > 0 ? row.responseTimeInMillis : '---'} ms</StyledTableCell>
+              <StyledTableCell align="right">{Object.values(row.responsesTimeInMillis).length > 0 && Object.values(row.responsesTimeInMillis)[0] > 0 ? Object.values(row.responsesTimeInMillis)[0] : '---'} ms</StyledTableCell>
               <StyledTableCell align="right">{
                 row.status === "UP" ? <CheckIcon></CheckIcon>
                   : row.status === "DOWN" ? <ErrorOutlineOutlinedIcon></ErrorOutlineOutlinedIcon>

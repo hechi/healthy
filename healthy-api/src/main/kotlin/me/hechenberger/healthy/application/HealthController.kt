@@ -22,7 +22,7 @@ class HealthController @Autowired constructor(
                 app.url,
                 app.upHttpCode,
                 app.downHttpCode,
-                app.responseTimeInMillis,
+                app.responsesTimeInMillis,
                 app.timestamp
             ) }
     }

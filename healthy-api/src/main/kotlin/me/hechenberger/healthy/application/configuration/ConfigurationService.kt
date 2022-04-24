@@ -35,8 +35,8 @@ class ConfigurationService(@Value("\${healthy.config.location}") var location: S
                 endpoint.url,
                 endpoint.upHttpCode,
                 endpoint.downHttpCode,
-                0,
-                Instant.MIN
+                Instant.MIN,
+                emptyMap(),
             )
         }
     }

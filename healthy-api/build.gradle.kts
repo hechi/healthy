@@ -40,6 +40,8 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:+")
     testCompileOnly("org.projectlombok:lombok:+")
     testAnnotationProcessor("org.projectlombok:lombok:+")
+//    // vavr
+//    implementation("io.vavr:vavr:+")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")

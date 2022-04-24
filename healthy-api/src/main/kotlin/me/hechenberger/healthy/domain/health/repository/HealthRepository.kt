@@ -16,7 +16,7 @@ interface HealthRepository {
         url: String,
         upHttpCode: List<Int>,
         downHttpCode: List<Int>,
-        responseTimeInMillis: Long,
+        responsesTimeInMillis: Map<Instant,Long>,
         timestampInMillis: Instant
     )
 }

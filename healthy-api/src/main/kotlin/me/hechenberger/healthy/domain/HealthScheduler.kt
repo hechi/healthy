@@ -47,9 +47,9 @@ class HealthScheduler @Autowired constructor(var healthRepository: HealthReposit
                 }
                 // TODO: refactor this part
                 app.updateStatus(statusCode)
-                app.responseTimeInMillis = responseTimeInMillis
+                app.addTimeStamp(Instant.now(),responseTimeInMillis)
                 app.timestamp = Instant.now()
-                healthRepository.save(app.name, app.status, app.url, app.upHttpCode, app.downHttpCode, app.responseTimeInMillis, app.timestamp)
+                healthRepository.save(app.name, app.status, app.url, app.upHttpCode, app.downHttpCode, app.responsesTimeInMillis, app.timestamp)
             }
         }
     }
