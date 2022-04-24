@@ -7,7 +7,7 @@ import java.time.Instant
 class HealthDto(
     var name: String,
     var status: Status,
-    var responseTimeInMillis: Long,
+    var responsesTimeInMillis: Map<Instant,Long>,
     var timestamp: Instant
 ) {
 
@@ -16,7 +16,7 @@ class HealthDto(
             return HealthDto(
                 health.name,
                 health.status,
-                health.responseTimeInMillis,
+                health.responsesTimeInMillis,
                 health.timestamp
             )
         }

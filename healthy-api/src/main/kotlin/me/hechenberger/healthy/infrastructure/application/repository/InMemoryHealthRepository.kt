@@ -28,13 +28,13 @@ class InMemoryHealthRepository :
         url: String,
         upHttpCode: List<Int>,
         downHttpCode: List<Int>,
-        responseTimeInMillis: Long,
+        responsesTimeInMillis: Map<Instant,Long>,
         timestampInMillis: Instant
     ) {
         applications = applications.plus(
             Pair(
                 name,
-                Health(name, status, url, upHttpCode, downHttpCode, responseTimeInMillis, timestampInMillis)
+                Health(name, status, url, upHttpCode, downHttpCode, timestampInMillis, responsesTimeInMillis,)
             )
         )
     }

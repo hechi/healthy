@@ -10,8 +10,8 @@ data class Health(
     var url: String,
     var upHttpCode: List<Int>,
     var downHttpCode: List<Int>,
-    var responseTimeInMillis: Long,
-    var timestamp: Instant
+    var timestamp: Instant,
+    var responsesTimeInMillis: Map<Instant,Long>
 ) {
     fun updateStatus(statusCode: Int) {
         if(upHttpCode.contains(statusCode)){
@@ -21,6 +21,13 @@ data class Health(
         }else{
             status = Status.UNKNOWN
         }
+    }
+    fun addTimeStamp(timestamp: Instant, responseTimeInMillis: Long){
+        var newResponseMap = responsesTimeInMillis + mapOf(timestamp to responseTimeInMillis)
+        // TODO: make count of entry configurable
+        var takeLastNElements = 10
+        responsesTimeInMillis = newResponseMap.toSortedMap(compareByDescending(Instant::toEpochMilli)).asIterable().take(takeLastNElements).associate { it.toPair() }
+        println(responsesTimeInMillis.size)
     }
 }
 
