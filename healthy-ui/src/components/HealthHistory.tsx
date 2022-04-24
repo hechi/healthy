@@ -1,8 +1,6 @@
 import * as React from "react";
 import { LineChart, Line, Tooltip, XAxis, YAxis } from 'recharts';
 
-const data = [{name: 'Page A', uv: 400, pv: 2400, amt: 2400},{name: 'Page A', uv: 300, pv: 2400, amt: 2400},{name: 'Page A', uv: 700, pv: 2400, amt: 2400}];
-
 type ResponseTime = {
   timestamp: Date,
   responseTime: number
@@ -28,7 +26,7 @@ class HealthHistory extends React.Component<HistoryData> {
           <XAxis dataKey="timestamp" reversed tickFormatter={timeStr => formatTimestampToDate(timeStr)}/>
           <YAxis></YAxis>
           <Line type="monotone" dataKey="responseTime" stroke="#8884d8" />
-          <Tooltip formatter={ (timeStr:number) => timeStr + " ms"}/>
+          <Tooltip formatter={ (recordedTime:number) => recordedTime + " ms"} labelFormatter={ (timestr: Date) => formatTimestampToDate(timestr)}/>
         </LineChart>
       </div>
     );

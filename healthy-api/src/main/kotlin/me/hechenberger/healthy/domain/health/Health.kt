@@ -25,7 +25,7 @@ data class Health(
     fun addTimeStamp(timestamp: Instant, responseTimeInMillis: Long){
         var newResponseMap = responsesTimeInMillis + mapOf(timestamp to responseTimeInMillis)
         // TODO: make count of entry configurable
-        var takeLastNElements = 10
+        var takeLastNElements = 100
         responsesTimeInMillis = newResponseMap.toSortedMap(compareByDescending(Instant::toEpochMilli)).asIterable().take(takeLastNElements).associate { it.toPair() }
         println(responsesTimeInMillis.size)
     }
