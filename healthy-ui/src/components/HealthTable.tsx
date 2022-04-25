@@ -6,10 +6,11 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 import CheckIcon from '@material-ui/icons/Check';
 import ErrorOutlineOutlinedIcon from '@material-ui/icons/ErrorOutlineOutlined';
 import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
+import HistoryIcon from '@material-ui/icons/History';
+import Paper from '@material-ui/core/Paper';
 import HealthHistory from './HealthHistory';
 
 const StyledTableCell = withStyles((theme: Theme) =>
@@ -22,8 +23,17 @@ const StyledTableCell = withStyles((theme: Theme) =>
     body: {
       fontSize: 16,
     },
+    svg: {
+      marginBottom: "-5px",
+    },
   }),
 )(TableCell);
+
+const useStyles = makeStyles({
+  table: {
+    minWidth: 700,
+  },
+});
 
 const StyledTableRow = withStyles((theme: Theme) =>
   createStyles({
@@ -35,13 +45,6 @@ const StyledTableRow = withStyles((theme: Theme) =>
     },
   }),
 )(TableRow);
-
-
-const useStyles = makeStyles({
-  table: {
-    minWidth: 700,
-  },
-});
 
 type HealthList = {
   list: Array<Health>
@@ -57,6 +60,53 @@ type Health = {
   status: string,
   responsesTimeInMillis: Array<ResponseTime>,
   timestamp: Date
+}
+
+type HealthRowProps = {
+  rowValue: Health,
+  rowKey: number
+}
+
+class HealthRow extends React.Component<HealthRowProps> {
+  state = { open: false}
+
+  render() {
+      const { rowValue, rowKey } = this.props;
+      const { open } = this.state;
+
+      return (
+      <>
+        <StyledTableRow key={rowKey}>
+          <>
+          <StyledTableCell>
+            
+            {rowValue.name}
+          </StyledTableCell>
+          <StyledTableCell align="right">{new Intl.DateTimeFormat("en-US", {
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit"
+          }).format(new Date(rowValue.timestamp))}</StyledTableCell>
+          <StyledTableCell align="right">
+            {rowValue.responsesTimeInMillis.length > 0 && rowValue.responsesTimeInMillis[0].responseTime > 0 ? rowValue.responsesTimeInMillis[0].responseTime : '---'} ms <HistoryIcon onClick={() => this.setState(() => ({ open: !open }))}></HistoryIcon>
+            </StyledTableCell>
+          <StyledTableCell align="right">{
+            rowValue.status === "UP" ? <CheckIcon></CheckIcon>
+              : rowValue.status === "DOWN" ? <ErrorOutlineOutlinedIcon></ErrorOutlineOutlinedIcon>
+                : <HelpOutlineOutlinedIcon></HelpOutlineOutlinedIcon>
+          }</StyledTableCell>
+          </>
+        </StyledTableRow>
+        { open ? 
+        <StyledTableRow>
+          <TableCell colSpan={4} align="center">
+              <HealthHistory data={rowValue.responsesTimeInMillis}></HealthHistory>
+          </TableCell>
+        </StyledTableRow>
+        : null }
+      </>
+      );
+  }
 }
 
 export default function HealthTables(healthList: HealthList) {
@@ -78,26 +128,7 @@ export default function HealthTables(healthList: HealthList) {
           {console.log(healthList.list)}
           {healthList.list.map((row, key) => (
             <>
-            <StyledTableRow key={key}>
-              <>
-              {console.log(row)}
-              <StyledTableCell >{row.name}</StyledTableCell>
-              <StyledTableCell align="right">{new Intl.DateTimeFormat("en-US", {
-                hour: "2-digit",
-                minute: "2-digit",
-                second: "2-digit"
-              }).format(new Date(row.timestamp))}</StyledTableCell>
-              <StyledTableCell align="right">{row.responsesTimeInMillis.length > 0 && row.responsesTimeInMillis[0].responseTime > 0 ? row.responsesTimeInMillis[0].responseTime : '---'} ms</StyledTableCell>
-              <StyledTableCell align="right">{
-                row.status === "UP" ? <CheckIcon></CheckIcon>
-                  : row.status === "DOWN" ? <ErrorOutlineOutlinedIcon></ErrorOutlineOutlinedIcon>
-                    : <HelpOutlineOutlinedIcon></HelpOutlineOutlinedIcon>
-              }</StyledTableCell>
-              </>
-            </StyledTableRow>
-            <StyledTableRow>
-              <TableCell colSpan={4} align="center"><HealthHistory data={row.responsesTimeInMillis}></HealthHistory></TableCell>
-            </StyledTableRow>
+            <HealthRow rowValue={row} rowKey={key} />
             </>
           ))}
           </>
