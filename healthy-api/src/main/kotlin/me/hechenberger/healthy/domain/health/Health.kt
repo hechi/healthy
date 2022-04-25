@@ -27,7 +27,6 @@ data class Health(
         // TODO: make count of entry configurable
         var takeLastNElements = 100
         responsesTimeInMillis = newResponseMap.toSortedMap(compareByDescending(Instant::toEpochMilli)).asIterable().take(takeLastNElements).associate { it.toPair() }
-        println(responsesTimeInMillis.size)
     }
 }
 
