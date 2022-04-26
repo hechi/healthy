@@ -23,9 +23,6 @@ const StyledTableCell = withStyles((theme: Theme) =>
     body: {
       fontSize: 16,
     },
-    svg: {
-      marginBottom: "-5px",
-    },
   }),
 )(TableCell);
 
@@ -33,6 +30,7 @@ const useStyles = makeStyles({
   table: {
     minWidth: 700,
   },
+  
 });
 
 const StyledTableRow = withStyles((theme: Theme) =>
@@ -76,7 +74,7 @@ class HealthRow extends React.Component<HealthRowProps> {
 
       return (
       <>
-        <StyledTableRow key={rowKey}>
+        <StyledTableRow key={rowKey} onClick={() => this.setState(() => ({ open: !open }))}>
           <>
           <StyledTableCell>
             
@@ -88,12 +86,12 @@ class HealthRow extends React.Component<HealthRowProps> {
             second: "2-digit"
           }).format(new Date(rowValue.timestamp))}</StyledTableCell>
           <StyledTableCell align="right">
-            {rowValue.responsesTimeInMillis.length > 0 && rowValue.responsesTimeInMillis[0].responseTime > 0 ? rowValue.responsesTimeInMillis[0].responseTime : '---'} ms <HistoryIcon onClick={() => this.setState(() => ({ open: !open }))}></HistoryIcon>
+            {rowValue.responsesTimeInMillis.length > 0 && rowValue.responsesTimeInMillis[0].responseTime > 0 ? rowValue.responsesTimeInMillis[0].responseTime : '---'} ms { open ? '(Hide History)': '(Show History)' }
             </StyledTableCell>
           <StyledTableCell align="right">{
             rowValue.status === "UP" ? <CheckIcon></CheckIcon>
-              : rowValue.status === "DOWN" ? <ErrorOutlineOutlinedIcon></ErrorOutlineOutlinedIcon>
-                : <HelpOutlineOutlinedIcon></HelpOutlineOutlinedIcon>
+            : rowValue.status === "DOWN" ? <ErrorOutlineOutlinedIcon></ErrorOutlineOutlinedIcon>
+            : <HelpOutlineOutlinedIcon></HelpOutlineOutlinedIcon>
           }</StyledTableCell>
           </>
         </StyledTableRow>
