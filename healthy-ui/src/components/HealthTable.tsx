@@ -9,7 +9,6 @@ import TableRow from '@material-ui/core/TableRow';
 import CheckIcon from '@material-ui/icons/Check';
 import ErrorOutlineOutlinedIcon from '@material-ui/icons/ErrorOutlineOutlined';
 import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
-import HistoryIcon from '@material-ui/icons/History';
 import Paper from '@material-ui/core/Paper';
 import HealthHistory from './HealthHistory';
 
@@ -65,6 +64,20 @@ type HealthRowProps = {
   rowKey: number
 }
 
+function validateConvertDateToString( timestamp: Date) {
+  try {
+    return new Intl.DateTimeFormat("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit"
+    }).format(new Date(timestamp))
+  }
+  catch(err) {
+      console.error("timestamp not parsable " + String(timestamp))
+  }
+  return "---"
+}
+
 class HealthRow extends React.Component<HealthRowProps> {
   state = { open: false}
 
@@ -77,14 +90,9 @@ class HealthRow extends React.Component<HealthRowProps> {
         <StyledTableRow key={rowKey} onClick={() => this.setState(() => ({ open: !open }))}>
           <>
           <StyledTableCell>
-            
             {rowValue.name}
           </StyledTableCell>
-          <StyledTableCell align="right">{new Intl.DateTimeFormat("en-US", {
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit"
-          }).format(new Date(rowValue.timestamp))}</StyledTableCell>
+          <StyledTableCell align="right">{validateConvertDateToString(rowValue.timestamp)}</StyledTableCell>
           <StyledTableCell align="right">
             {rowValue.responsesTimeInMillis.length > 0 && rowValue.responsesTimeInMillis[0].responseTime > 0 ? rowValue.responsesTimeInMillis[0].responseTime : '---'} ms { open ? '(Hide History)': '(Show History)' }
             </StyledTableCell>

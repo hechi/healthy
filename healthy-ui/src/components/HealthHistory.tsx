@@ -11,11 +11,17 @@ type HistoryData = {
 }
 
 const formatTimestampToDate = function(timestamp:Date) {
-  return new Intl.DateTimeFormat("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit"
-  }).format(new Date(timestamp))
+  try {
+    return new Intl.DateTimeFormat("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit"
+    }).format(new Date(timestamp))
+  }
+  catch(err) {
+      console.error("timestamp not parsable " + String(timestamp))
+  }
+  return "0"
 }
 
 class HealthHistory extends React.Component<HistoryData> {
