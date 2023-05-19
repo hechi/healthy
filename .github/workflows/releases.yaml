@@ -25,7 +25,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: healthy-api
-          tags: ${{ env.RELEASE_VERSION }}
+          tags: ${{ secrets.DOCKER_USERNAME }}/healthy-api:${{ env.RELEASE_VERSION }}
 
   healthy-ui:
     name: Build and publish healthy-ui
@@ -45,7 +45,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: healthy-ui
-          tags: ${{ env.RELEASE_VERSION }}
+          tags: ${{ secrets.DOCKER_USERNAME }}/healthy-ui:${{ env.RELEASE_VERSION }}
 
   release_healthy:
     name: Release healthy-api and healthy-ui
