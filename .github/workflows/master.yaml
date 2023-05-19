@@ -22,13 +22,11 @@ jobs:
       - name: Build and push healthy-api image
         uses: docker/build-push-action@v4
         with:
-          context: hechi/healthy-api
-          dockerfile: healthy-api/Dockerfile
+          context: healthy-api
           tags: dev
       # build healthy-ui image and push it to docker hub
       - name: Build and push healthy-ui image
         uses: docker/build-push-action@v4
         with:
-          context: hechi/healthy-ui
-          dockerfile: healthy-ui/Dockerfile
+          context: healthy-ui
           tags: dev

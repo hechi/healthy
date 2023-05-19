@@ -24,8 +24,7 @@ jobs:
       - name: Build and push healthy-api image
         uses: docker/build-push-action@v4
         with:
-          context: hechi/healthy-api
-          dockerfile: healthy-api/Dockerfile
+          context: healthy-api
           tags: ${{ env.RELEASE_VERSION }}
 
   healthy-ui:
@@ -45,8 +44,7 @@ jobs:
       - name: Build and push healthy-ui image
         uses: docker/build-push-action@v4
         with:
-          context: hechi/healthy-ui
-          dockerfile: healthy-ui/Dockerfile
+          context: healthy-ui
           tags: ${{ env.RELEASE_VERSION }}
 
   release_healthy:
