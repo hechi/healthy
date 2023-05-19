@@ -1,18 +1,22 @@
 package me.hechenberger.healthy.application.configuration
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.json.JsonMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
+//import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.module.kotlin.KotlinFeature
 import com.fasterxml.jackson.module.kotlin.KotlinModule
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.google.common.io.Resources
 import me.hechenberger.healthy.domain.health.Health
 import me.hechenberger.healthy.domain.health.Status
-import mu.KotlinLogging
+import mu.two.KotlinLogging
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.PropertySource
 import org.springframework.stereotype.Service
 import java.net.URL
 import java.time.Instant
+
 
 private val log = KotlinLogging.logger {}
 
@@ -43,7 +47,16 @@ class ConfigurationService(@Value("\${healthy.config.location}") var location: S
 }
 
 fun loadFromFile(configFile: String): Endpoints {
-    val mapper = ObjectMapper(YAMLFactory()) // Enable YAML parsing
+    val kotlinModule = KotlinModule.Builder()
+        .disable(KotlinFeature.StrictNullChecks)
+        .disable(KotlinFeature.NullToEmptyCollection)
+        .disable(KotlinFeature.NullToEmptyMap)
+        .disable(KotlinFeature.NullIsSameAsDefault)
+        .build()
+    val mapper = ObjectMapper(YAMLFactory()).registerKotlinModule()
+//    val mapper = JsonMapper.builder()
+//        .addModule(kotlinModule)
+//        .build()
     mapper.registerModule(
         KotlinModule.Builder()
             .withReflectionCacheSize(512)
