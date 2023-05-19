@@ -1,0 +1,30 @@
+name: "Healthy - pull requests"
+
+# only execute workflow on pull requests
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  buildAndTest:
+    name: Build and publish dev docker
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      # build healthy-api image and push it to docker hub
+      - name: Build and push healthy-api image
+        uses: docker/build-push-action@v2
+        with:
+          path: healthy-api/
+          dockerfile: healthy-api/Dockerfile
+          push: false
+      # build healthy-ui image and push it to docker hub
+      - name: Build and push healthy-ui image
+        uses: docker/build-push-action@v2
+        with:
+          path: healthy-ui/
+          dockerfile: healthy-ui/Dockerfile
+          push: false
