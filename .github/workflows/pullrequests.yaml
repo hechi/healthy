@@ -18,13 +18,11 @@ jobs:
       - name: Build and push healthy-api image
         uses: docker/build-push-action@v2
         with:
-          path: healthy-api/
-          dockerfile: healthy-api/Dockerfile
+          context: healthy-api/
           push: false
       # build healthy-ui image and push it to docker hub
       - name: Build and push healthy-ui image
         uses: docker/build-push-action@v2
         with:
-          path: healthy-ui/
-          dockerfile: healthy-ui/Dockerfile
+          context: healthy-ui/
           push: false
