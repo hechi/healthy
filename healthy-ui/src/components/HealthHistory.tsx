@@ -32,7 +32,7 @@ class HealthHistory extends React.Component<HistoryData> {
           <XAxis dataKey="timestamp" reversed tickFormatter={timeStr => formatTimestampToDate(timeStr)}/>
           <YAxis></YAxis>
           <Line type="monotone" dataKey="responseTime" stroke="#8884d8" />
-          <Tooltip formatter={ (recordedTime:number) => recordedTime + " ms"} labelFormatter={ (timestr: Date) => formatTimestampToDate(timestr)}/>
+          <Tooltip formatter={ (recordedTime:number) => recordedTime} labelFormatter={ (timestr: Date) => formatTimestampToDate(timestr)}/>
         </LineChart>
       </>
     );
