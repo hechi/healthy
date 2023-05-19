@@ -23,10 +23,12 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: healthy-api
+          push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/healthy-api:dev
       # build healthy-ui image and push it to docker hub
       - name: Build and push healthy-ui image
         uses: docker/build-push-action@v4
         with:
           context: healthy-ui
+          push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/healthy-ui:dev

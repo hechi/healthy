@@ -25,6 +25,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: healthy-api
+          push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/healthy-api:${{ env.RELEASE_VERSION }}
 
   healthy-ui:
@@ -45,6 +46,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: healthy-ui
+          push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/healthy-ui:${{ env.RELEASE_VERSION }}
 
   release_healthy:
