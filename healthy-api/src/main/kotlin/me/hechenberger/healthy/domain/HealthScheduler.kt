@@ -1,16 +1,16 @@
 package me.hechenberger.healthy.domain
 
-import com.github.kittinunf.fuel.Fuel
+import fuel.Fuel
+import fuel.get
 import kotlinx.coroutines.*
 import me.hechenberger.healthy.domain.health.repository.HealthRepository
-import mu.KotlinLogging
+import mu.two.KotlinLogging
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 import java.net.InetAddress
 import java.net.URI
 import java.time.Instant
-import java.time.LocalDateTime
 import kotlin.system.measureTimeMillis
 
 
@@ -55,13 +55,10 @@ class HealthScheduler @Autowired constructor(var healthRepository: HealthReposit
     }
 }
 
-fun requestUrl(url: String): Int {
+suspend fun requestUrl(url: String): Int {
     val urlIp = InetAddress.getByName(URI.create(url).host)
     log.info { "$url ${urlIp.getHostAddress()}" }
-    val response = Fuel
-        .reset()
+    return Fuel
         .get(url)
-        .timeout(100)
-        .useHttpCache(false).responseString().second
-    return response.statusCode
+        .statusCode
 }

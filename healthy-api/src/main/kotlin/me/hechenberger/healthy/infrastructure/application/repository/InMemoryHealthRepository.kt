@@ -3,7 +3,7 @@ package me.hechenberger.healthy.infrastructure.application.repository
 import me.hechenberger.healthy.domain.health.Health
 import me.hechenberger.healthy.domain.health.Status
 import me.hechenberger.healthy.domain.health.repository.HealthRepository
-import mu.KotlinLogging
+import mu.two.KotlinLogging
 import org.springframework.stereotype.Repository
 import java.time.Instant
 
